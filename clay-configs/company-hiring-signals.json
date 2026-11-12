@@ -1,0 +1,33 @@
+{
+  "name": "JobsPipe: Company Hiring Signals",
+  "description": "Get hiring momentum and activity signals for a company",
+  "method": "POST",
+  "url": "https://api.jobspipe.dev/v1/jobs/companies",
+  "headers": {
+    "Authorization": "Bearer YOUR_JOBSPIPE_API_KEY",
+    "Content-Type": "application/json"
+  },
+  "body": {
+    "job_title_or": [],
+    "company_domain_or": ["{{company_domain}}"],
+    "limit": 1
+  },
+  "outputMapping": {
+    "company_name": "$.data[0].name",
+    "total_open_jobs": "$.data[0].jobs",
+    "last_posted": "$.data[0].last_posted",
+    "employee_count": "$.data[0].employee_count",
+    "industry": "$.data[0].industry",
+    "hq_country": "$.data[0].hq_country",
+    "hq_city": "$.data[0].hq_city",
+    "credits_charged": "$.metadata.credits_charged"
+  },
+  "notes": [
+    "Replace YOUR_JOBSPIPE_API_KEY with your actual API key",
+    "Replace {{company_domain}} with a Clay column reference",
+    "Returns hiring activity summary for the company",
+    "Use total_open_jobs and last_posted to gauge hiring velocity",
+    "Costs 1 credit per company (free if already paid this month)",
+    "For deeper insights, get company profile with /v1/jobs/companies/{key}"
+  ]
+}

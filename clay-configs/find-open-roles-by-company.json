@@ -1,0 +1,32 @@
+{
+  "name": "JobsPipe: Find Open Roles for Company",
+  "description": "Search for all open job postings from a company by domain name",
+  "method": "POST",
+  "url": "https://api.jobspipe.dev/v1/jobs/search",
+  "headers": {
+    "Authorization": "Bearer YOUR_JOBSPIPE_API_KEY",
+    "Content-Type": "application/json"
+  },
+  "body": {
+    "company_domain_or": ["{{company_domain}}"],
+    "limit": 25,
+    "posted_at_max_age_days": 90
+  },
+  "outputMapping": {
+    "total_results": "$.metadata.total_results",
+    "jobs": "$.data",
+    "credits_charged": "$.metadata.credits_charged",
+    "job_titles": "$.data[*].job_title",
+    "job_locations": "$.data[*].location",
+    "job_urls": "$.data[*].url",
+    "job_seniorities": "$.data[*].seniority",
+    "job_posted_dates": "$.data[*].date_posted"
+  },
+  "notes": [
+    "Replace YOUR_JOBSPIPE_API_KEY with your actual API key from https://jobspipe.dev/dashboard",
+    "Replace {{company_domain}} with a Clay column reference like /column1",
+    "Costs 1 credit per job returned (not already paid this month)",
+    "Returns up to 25 jobs; adjust 'limit' as needed (max varies by plan)",
+    "posted_at_max_age_days filters to jobs posted in last N days"
+  ]
+}

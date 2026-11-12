@@ -1,0 +1,36 @@
+{
+  "name": "JobsPipe: Search Companies Hiring for Role",
+  "description": "Find all companies currently hiring for a specific role or job title",
+  "method": "POST",
+  "url": "https://api.jobspipe.dev/v1/jobs/companies",
+  "headers": {
+    "Authorization": "Bearer YOUR_JOBSPIPE_API_KEY",
+    "Content-Type": "application/json"
+  },
+  "body": {
+    "job_title_or": ["{{job_title}}"],
+    "job_country_code_or": ["US"],
+    "limit": 25,
+    "order_by": "jobs"
+  },
+  "outputMapping": {
+    "total_companies": "$.metadata.total_companies",
+    "companies": "$.data",
+    "company_names": "$.data[*].name",
+    "company_domains": "$.data[*].domain",
+    "open_positions_per_company": "$.data[*].jobs",
+    "employee_counts": "$.data[*].employee_count",
+    "industries": "$.data[*].industry",
+    "hq_locations": "$.data[*].hq_city",
+    "last_posted_dates": "$.data[*].last_posted",
+    "credits_charged": "$.metadata.credits_charged"
+  },
+  "notes": [
+    "Replace YOUR_JOBSPIPE_API_KEY with your actual API key",
+    "Replace {{job_title}} with the role (e.g., 'software engineer', 'SDR')",
+    "Change job_country_code_or to target specific countries (e.g., ['US', 'CA'])",
+    "order_by 'jobs' sorts by number of openings (use 'last_posted' for recency)",
+    "Returns companies ordered by hiring volume",
+    "Costs 1 credit per company returned (free if paid this month)"
+  ]
+}

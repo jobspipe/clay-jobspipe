@@ -1,0 +1,34 @@
+{
+  "name": "JobsPipe: Check if Company Hiring for Role",
+  "description": "Check if a company is currently hiring for a specific job title or department",
+  "method": "POST",
+  "url": "https://api.jobspipe.dev/v1/jobs/search",
+  "headers": {
+    "Authorization": "Bearer YOUR_JOBSPIPE_API_KEY",
+    "Content-Type": "application/json"
+  },
+  "body": {
+    "company_domain_or": ["{{company_domain}}"],
+    "job_title_or": ["{{job_title}}"],
+    "limit": 10,
+    "posted_at_max_age_days": 60
+  },
+  "outputMapping": {
+    "is_hiring": "$.metadata.total_results > 0",
+    "number_of_openings": "$.metadata.total_results",
+    "job_titles": "$.data[*].job_title",
+    "job_locations": "$.data[*].location",
+    "job_urls": "$.data[*].url",
+    "seniority_levels": "$.data[*].seniority",
+    "posted_dates": "$.data[*].date_posted",
+    "credits_used": "$.metadata.credits_charged"
+  },
+  "notes": [
+    "Replace YOUR_JOBSPIPE_API_KEY with your actual API key",
+    "Replace {{company_domain}} with a Clay column reference (e.g., /column1)",
+    "Replace {{job_title}} with the role to search (e.g., 'software engineer', 'sales development representative')",
+    "For departments, use terms like 'engineering', 'sales', 'marketing'",
+    "Returns 1-10 matching jobs; total_results shows all matches",
+    "Costs 1 credit per unique job returned this month"
+  ]
+}
