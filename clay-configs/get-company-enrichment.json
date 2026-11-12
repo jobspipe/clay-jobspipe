@@ -1,0 +1,30 @@
+{
+  "name": "JobsPipe: Get Company Enrichment",
+  "description": "Enrich a company with details like headcount, location, description, and LinkedIn",
+  "method": "GET",
+  "url": "https://api.jobspipe.dev/v1/companies/{key}",
+  "headers": {
+    "Authorization": "Bearer YOUR_JOBSPIPE_API_KEY"
+  },
+  "outputMapping": {
+    "company_name": "$.name",
+    "domain": "$.domain",
+    "website": "$.url",
+    "logo_url": "$.logo",
+    "employee_count": "$.employee_count",
+    "linkedin_url": "$.linkedin_url",
+    "description": "$.description",
+    "hq_city": "$.location.city",
+    "hq_region": "$.location.region",
+    "hq_country": "$.location.country",
+    "founded_year": "$.founded"
+  },
+  "notes": [
+    "Replace YOUR_JOBSPIPE_API_KEY with your actual API key",
+    "Replace {key} in URL path with Clay column reference to company_domain",
+    "Can also use company name, email, or careers URL as the key",
+    "Costs 1 credit per successful lookup (404 responses are free)",
+    "Returns enriched company data from job posting sources",
+    "Companies appear here once they've posted at least one job"
+  ]
+}

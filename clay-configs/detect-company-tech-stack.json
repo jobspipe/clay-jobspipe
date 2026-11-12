@@ -1,0 +1,30 @@
+{
+  "name": "JobsPipe: Detect Company Tech Stack",
+  "description": "Scan a company's website to detect technologies they use",
+  "method": "POST",
+  "url": "https://api.jobspipe.dev/v1/stack/scan",
+  "headers": {
+    "Authorization": "Bearer YOUR_JOBSPIPE_API_KEY",
+    "Content-Type": "application/json"
+  },
+  "body": {
+    "domain": "{{company_domain}}",
+    "mode": "auto"
+  },
+  "outputMapping": {
+    "domain_scanned": "$.domain",
+    "scan_timestamp": "$.scanned_at",
+    "technologies_found": "$.detected[*].name",
+    "technology_categories": "$.detected[*].categories",
+    "technology_slugs": "$.detected[*].slug",
+    "http_status": "$.http_status"
+  },
+  "notes": [
+    "Replace YOUR_JOBSPIPE_API_KEY with your actual API key",
+    "Replace {{company_domain}} with a Clay column reference",
+    "Detects web technologies: frameworks, analytics, hosting, etc.",
+    "mode 'auto' balances speed and coverage; use 'deep' for comprehensive scan",
+    "Costs 1 credit per scan (not per technology found)",
+    "Returns empty 'detected' array if domain is unreachable"
+  ]
+}
